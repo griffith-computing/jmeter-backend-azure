@@ -171,6 +171,10 @@ public class AzureBackendClient extends AbstractBackendListenerClient {
             config.setConnectionString(connectionString);
         }
 
+        // Disable sampling to send all telemetry data to Application Insights
+        config.getTelemetryProcessors().clear();
+        log.info("Application Insights sampling has been disabled - all telemetry data will be sent");
+        
         telemetryClient = new TelemetryClient(config);
         if (liveMetrics) {
             QuickPulse.INSTANCE.initialize(config);
